@@ -5,14 +5,27 @@ class PlayerAI(BaseAI):
         
     def getMove(self, grid):
         moves = grid.getAvailableMoves()
-        best_move = self.max_func(moves, grid)
         
-        for each in moves:
-            print (each)
-        #print (best_move)
+        if (self.search):
+            # if search is implemented run search
+            best_move = self.max_func(moves, grid)
+        else: 
+            # if Not use random move
+            best_move = moves[randint(0, len(moves)-1)]
+        
+        ## Return Best Move:
         return best_move if moves else None
-
+        ## searching implementation below
+        
+        
+        
+    def search(self):
+        return True
+        
     def max_func(self, moves, grid):
+        # max_func search best value move
+        # input move, grid
+        # return move
         max_val = 0
         best_move = [0]
         for move in moves:
@@ -28,6 +41,9 @@ class PlayerAI(BaseAI):
         return best_move[randint(0, len(best_move)-1)]
 
     def min_func(self,grid):
+        # min_func search worst case board
+        # input board
+        # return new grid
         min_val = 0
         worst_move = 0
         computer_moves = grid.getAvailableCells()
@@ -40,6 +56,9 @@ class PlayerAI(BaseAI):
         return min_val
 
     def heuristic_func(self, grid, move, cur_max):
+        # heuristic_func should return value for particular move
+        # input: move, grid after move, some current state values
+        # return: weight for move
         h = 0
         if move == 2:
             h -= 2
@@ -50,8 +69,5 @@ class PlayerAI(BaseAI):
         
         if grid.getMaxTile() > cur_max:
             h += 3
-        
-        # if grid
-        
-        print ('h=', h, 'move=', move)
+
         return h
