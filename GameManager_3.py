@@ -105,6 +105,9 @@ class GameManager:
 
             turn = 1 - turn
         print(maxTile)
+        f = open('output.txt', 'a')
+        f.write('minmax_f ' + str(maxTile))
+        f.close
 
     def isGameOver(self):
         return not self.grid.canMove()
