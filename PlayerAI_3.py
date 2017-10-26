@@ -79,13 +79,13 @@ class PlayerAI(BaseAI):
         # return: weight for move
         h = 0
         if move == 2:
-            h -= 2
+            h  += 0
         elif move == 1:
             h += 1
         else:
             h += 2
         
         if grid.getMaxTile() > cur_max:
-            h += 3
+            h += 0
 
         return h

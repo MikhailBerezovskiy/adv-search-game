@@ -22,3 +22,9 @@ max_heurisitc 8
 max_heurisitc 16
 max_heurisitc 64
 max_heurisitc 128
+max_heurisitc 128
+max_heurisitc 128
+max_heurisitc 128
+max_heurisitc 256
+max_heurisitc 256
+max_heurisitc 256
