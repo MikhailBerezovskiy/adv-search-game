@@ -49,7 +49,7 @@ class PlayerAI(BaseAI):
         for move in moves:
             newGrid = grid.clone()
             newGrid.move(move)
-            move_val = self.heuristic_func(newGrid, move, grid.getMaxTile())
+            move_val = self.heuristic_func(newGrid, move, grid.getMaxTile(), grid.getAvailableCells())
             if move_val > max_val:
                 max_val = move_val
                 best_move = [move]
@@ -73,19 +73,21 @@ class PlayerAI(BaseAI):
                 min_val = move_val
         return min_val
 
-    def heuristic_func(self, grid, move, cur_max):
+    def heuristic_func(self, grid, move, cur_max, cur_avail):
         # heuristic_func should return value for particular move
         # input: move, grid after move, some current state values
         # return: weight for move
         h = 0
         if move == 2:
-            h  += 0
+            h  -= 1
         elif move == 1:
             h += 1
         else:
             h += 2
         
         if grid.getMaxTile() > cur_max:
-            h += 0
+            h += 2
+        if grid.getAvailableCells() > cur_avail:
+            h += 2
 
         return h
