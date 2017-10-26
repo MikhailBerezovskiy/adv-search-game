@@ -13,3 +13,12 @@ max_f 128
 max_f 64
 max_f 16
 minmax_f 16
+minmax_f 16
+minmax_f 16
+max_heurisitc 32
+max_heurisitc 128
+max_heurisitc 16
+max_heurisitc 8
+max_heurisitc 16
+max_heurisitc 64
+max_heurisitc 128
