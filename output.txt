@@ -1,1 +1,15 @@
-random 128random 64random 128random 128avoid_last 256avoid_last 128avoid_last 64max_f 128max_f 32max_f 64max_f 64max_f 128max_f 64max_f 16minmax_f 16
+random 128
+random 64
+random 128
+random 128
+avoid_last 256
+avoid_last 128
+avoid_last 64
+max_f 128
+max_f 32
+max_f 64
+max_f 64
+max_f 128
+max_f 64
+max_f 16
+minmax_f 16
