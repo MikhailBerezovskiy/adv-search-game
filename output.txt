@@ -1,0 +1,1 @@
+random 128random 64random 128random 128avoid_last 256avoid_last 128avoid_last 64max_f 128max_f 32max_f 64max_f 64max_f 128max_f 64max_f 16minmax_f 16
