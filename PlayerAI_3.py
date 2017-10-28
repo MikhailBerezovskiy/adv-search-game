@@ -23,7 +23,7 @@ class PlayerAI(BaseAI):
     
 # keep track of the time or depth on minmax
     def __init__(self):
-        self.depth = 3
+        self.depth = 2
         
     def getMove(self, grid):
         moves = grid.getAvailableMoves()
@@ -42,7 +42,7 @@ class PlayerAI(BaseAI):
         
         
     def minmax(self, moves, grid, depth):
-        return self.max_func(moves, grid, depth, 5)
+        return self.max_func(moves, grid, depth, 5)[1]
         
     def max_func(self, moves, grid, depth, pmove):
         # max_func search best value move
@@ -63,7 +63,7 @@ class PlayerAI(BaseAI):
                 max_val = h
                  
         if depth > self.depth:
-            return min()
+            return [max_val, pmove]
         else:
             return self.min_func(newGrid, depth, pmove)
         
@@ -73,28 +73,24 @@ class PlayerAI(BaseAI):
         # input board
         # return new grid
         min_val = 6
-        worst_spawn = 0
+        spawns = []
         computer_moves = grid.getAvailableCells()
         for spawn in computer_moves:
-            if sum(spawn) < min_val:
-                min_val = sum(spawn)
-                worst_spawn = spawn
-        newGrid = grid.clone()
-        newGrid.insertTile(worst_spawn, 2)
-        moves = newGrid.getAvailableMoves()
-        return self.max_func(moves, newGrid, depth, pmove)
-
+            newGrid = grid.clone()
+            newGrid.insertTile(spawn, 2)
+            moves = newGrid.getAvailableMoves()
+            sp_val = self.max_func(moves, newGrid, depth, pmove)
+            if sp_val[0] < min_val:
+                min_val = sp_val[0]
+        return [min_val, pmove]
+        
     def heuristic_func(self, grid, move):
         # heuristic_func should return value for particular move
         # input: move, grid after move, some current state values
         # return: weight for move
         # 0-up, 1-down, 2-left, 3-right
         h = 0
-        if move in [0,2]:
-            h -= 0
-        elif move == 1:
-            h += 1
-        else:
-            h += 2
-        h += len(grid.getAvailableCells())
+        h += [0,3,0,3][move]
+        h += len(grid.getAvailableCells()) + grid.getMaxTile()
+        # print ('h=', h)
         return h

@@ -66,3 +66,5 @@ max_available 128
 max_available 32
 max_available 128
 minmax64
+minmax2
+minmax2
