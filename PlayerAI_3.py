@@ -13,20 +13,24 @@ class PlayerAI(BaseAI):
 
 # METHODS:
 # getMove: return best move (I hope) to GameManager
+# minmax: run search and control depth and time
 # max_func: max of heuristic_func(move)
 # min_func: insert new tile, get moves, min of heuristic_func(moves)
 # alpha-beta: keep track of alpha and beta on the class self
 # heuristic_func: should include some best practices adding or removing weight of grid
+# min_heuristic: for min
+# max_heuristic: for max
     
 # keep track of the time or depth on minmax
-    
+    def __init__(self):
+        self.depth = 3
         
     def getMove(self, grid):
         moves = grid.getAvailableMoves()
         
-        if (self.search):
+        if (self.minmax):
             # if search is implemented run search
-            best_move = self.max_func(moves, grid)
+            best_move = self.minmax(moves, grid, 0)
         else: 
             # if Not use random move
             best_move = moves[randint(0, len(moves)-1)]
@@ -37,57 +41,60 @@ class PlayerAI(BaseAI):
         
         
         
-    def search(self):
-        return True
+    def minmax(self, moves, grid, depth):
+        return self.max_func(moves, grid, depth, 5)
         
-    def max_func(self, moves, grid):
+    def max_func(self, moves, grid, depth, pmove):
         # max_func search best value move
         # input move, grid
         # return move
+        depth += 1
         max_val = 0
-        best_move = [0]
+        best_move = 0
         for move in moves:
             newGrid = grid.clone()
             newGrid.move(move)
-            move_val = self.heuristic_func(newGrid, move, grid.getMaxTile(), grid.getAvailableCells())
-            if move_val > max_val:
-                max_val = move_val
-                best_move = [move]
-            elif move_val == max_val:
-                best_move.append(move)
-        print (best_move)
-        return best_move[randint(0, len(best_move)-1)]
-
-    def min_func(self,grid):
+            if depth == 1:
+                pmove = move
+            # print ('depth', depth, 'h=', self.heuristic_func(newGrid), 'pmove', pmove)
+            h = self.heuristic_func(newGrid, move)
+            if h > max_val:
+                best_move = move
+                max_val = h
+                 
+        if depth > self.depth:
+            return min()
+        else:
+            return self.min_func(newGrid, depth, pmove)
+        
+    
+    def min_func(self, grid, depth, pmove):
         # min_func search worst case board
         # input board
         # return new grid
-        min_val = 0
-        worst_move = 0
+        min_val = 6
+        worst_spawn = 0
         computer_moves = grid.getAvailableCells()
-        for tile_pos in computer_moves:
-            newGrid = grid.clone()
-            newGrid.insertTile(tile_pos, 2)
-            move_val = newGrid.getMaxTile()
-            if move_val < min_val:
-                min_val = move_val
-        return min_val
+        for spawn in computer_moves:
+            if sum(spawn) < min_val:
+                min_val = sum(spawn)
+                worst_spawn = spawn
+        newGrid = grid.clone()
+        newGrid.insertTile(worst_spawn, 2)
+        moves = newGrid.getAvailableMoves()
+        return self.max_func(moves, newGrid, depth, pmove)
 
-    def heuristic_func(self, grid, move, cur_max, cur_avail):
+    def heuristic_func(self, grid, move):
         # heuristic_func should return value for particular move
         # input: move, grid after move, some current state values
         # return: weight for move
+        # 0-up, 1-down, 2-left, 3-right
         h = 0
-        if move == 2:
-            h  -= 1
+        if move in [0,2]:
+            h -= 0
         elif move == 1:
             h += 1
         else:
             h += 2
-        
-        if grid.getMaxTile() > cur_max:
-            h += 2
-        if grid.getAvailableCells() > cur_avail:
-            h += 2
-
+        h += len(grid.getAvailableCells())
         return h

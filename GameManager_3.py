@@ -18,7 +18,7 @@ actionDic = {
 (PLAYER_TURN, COMPUTER_TURN) = (0, 1)
 
 # Time Limit Before Losing
-timeLimit = 0.2
+timeLimit = 0.1
 allowance = 0.05
 
 class GameManager:
@@ -106,7 +106,7 @@ class GameManager:
             turn = 1 - turn
         print(maxTile)
         f = open('output.txt', 'a')
-        f.write('max_heurisitc ' + str(maxTile) + '\n')
+        f.write('minmax' + str(maxTile) + '\n')
         f.close
 
     def isGameOver(self):
