@@ -40,12 +40,12 @@ class PlayerAI(BaseAI):
             self.expNodes = 0
             newGrid = grid.clone()
             newGrid.move(move)
-            move_val = self.minmax(newGrid, 4, -100000, 100000, False)
+            move_val = self.minmax(newGrid, 3, -100000, 100000, False)
             self.expNodesLi.append(self.expNodes)
             if move_val > fn:
                 best_move = move
                 fn = move_val
-        print ('expNodes:', self.expNodesLi)
+        print ('expNodes:', self.expNodesLi, 'usedTime', time.clock() - self.t0)
         # print ('nodes:', self.expNodes, 'h:', move_val)
         # print(moves, 'val', fn, 'time:', self.t1-self.t0, 'nodes:', self.expNodes, ' movesH:', self.vals)
         return best_move if best_move in moves else None
@@ -74,6 +74,7 @@ class PlayerAI(BaseAI):
         else:
             v = 100000
             av_cells = node.getAvailableCells()
+            av_cells = av_cells.slice[0:3]
             spawns = av_cells + av_cells
             len4 = len(av_cells)
             track = 0
@@ -131,5 +132,6 @@ class PlayerAI(BaseAI):
                     h += v - gd[gm[x+1][y]]
                     h += v - gd[gm[x][y+1]]
                     h += v - gd[gm[x+1][y+1]]
+        h += len(gc)
                 
         return h

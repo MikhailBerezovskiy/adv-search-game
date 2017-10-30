@@ -375,3 +375,8 @@ sqDif 512
 sqDif 1024
 sqDif 512
 sqDif 512
+sqDif 1024
+sqDif 256
+sqDif 512
+sqDif 512
+sqDif 512
