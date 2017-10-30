@@ -1,5 +1,7 @@
 from random import randint
 from BaseAI_3 import BaseAI
+from Displayer_3  import Displayer
+import time
 
 class PlayerAI(BaseAI):
 
@@ -24,82 +26,107 @@ class PlayerAI(BaseAI):
 # keep track of the time or depth on minmax
 
     def getMove(self, grid):
-        moves = grid.getAvailableMoves()
+        self.t0 = time.clock()
 
-        best_move = -1
+        # self.vals = []
+        moves = grid.getAvailableMoves()
+        self.lenmoves = len(moves)
+        self.movenum = 0
         fn = 0
+        best_move = moves[0]
         for move in moves:
-            move_val = self.minmax([move], grid, move==moves[0])
+            self.movenum += 1
+            self.expNodes = 0
+            newGrid = grid.clone()
+            newGrid.move(move)
+            move_val = self.minmax(newGrid, 10, -100000, 100000, False)
+            print ('expNodes:', self.expNodes)
             if move_val > fn:
                 best_move = move
                 fn = move_val
 
-        ## Return Best Move:
-        if best_move not in moves and len(moves) > 0:
-            best_move = moves[0]
-        return best_move if moves else None
+        # print ('nodes:', self.expNodes, 'h:', move_val)
+        # print(moves, 'val', fn, 'time:', self.t1-self.t0, 'nodes:', self.expNodes, ' movesH:', self.vals)
+        return best_move if best_move in moves else None
         ## searching implementation below
 
-    def minmax(self, moves, grid, first_child):
-        self.depth = 10
-        self.alpha = 100
-        self.expNodes = 0
-        return self.max_func(moves, grid, 0, first_child)
+    def minmax(self, node, depth, alpha, beta, max_player):
+        self.expNodes += 1
+        self.t1 = time.clock()
+        # print ('time:', t1 - self.t0)
+        if depth == 0 or self.t1-self.t0 >= 0.18/self.lenmoves*self.movenum:
+        # if depth == 0 or self.t1-self.t0 >= 0.15:
+            return self.heuristic_func(node, depth)
 
-    def max_func(self, moves, grid, depth, first_child):
-        # max of moves
-        max_val = 0
-        for move in moves:
-            self.expNodes += 1
-            # print('expNodes', self.expNodes)
-            newGrid = grid.clone()
-            newGrid.move(move)
-            hn = self.heuristic_func(newGrid, move)
-            if depth >= self.depth:
-                if hn > max_val:
-                    max_val = hn
-            else:
-                if hn < self.alpha:
-                    self.alpha = hn
+        if max_player:
+            v = -100000
+            moves = node.getAvailableMoves()
+            for move in moves:
+                childNode = node.clone()
+                childNode.move(move)
+                v = max(v, self.minmax(childNode, depth-1, alpha, beta, False))
+                alpha = max(v, alpha)
+                if beta <= alpha:
+                    break
+            return v
+
+        else:
+            v = 100000
+            av_cells = node.getAvailableCells()
+            spawns = av_cells + av_cells
+            len4 = len(av_cells)
+            track = 0
+            for spawn in spawns:
+                childNode = node.clone()
+                if track > len4:
+                    insertVal = 4
                 else:
-                    if not first_child:
-                        return self.alpha
-                depth += 1
-                return self.min_func(newGrid, depth)
-        return max_val
+                    insertVal = 2
+                childNode.insertTile(spawn, insertVal)
 
-    def min_func(self, grid, depth):
-        # min of
-        spawns = []
-        avail = grid.getAvailableCells()
-        for spawn in avail:
-            newGrid = grid.clone()
-            newGrid.insertTile(spawn, 2)
-            newMoves = newGrid.getAvailableMoves()
-            first_child = spawn == avail[0]
-            spawns.append(self.max_func(newMoves, newGrid, depth, first_child))
-        return min(spawns)
+                v = min(v, self.minmax(childNode, depth-1, alpha, beta, True))
+                beta = min (v, beta)
+                track += 1
+                if beta <= alpha:
+                    break
+            return v
 
-    def heuristic_func(self, grid, move):
+
+    def heuristic_func(self, grid, depth):
         # heuristic_func should return value for particular move
         # input: move, grid after move, some current state values
         # return: weight for move
         # 0-up, 1-down, 2-left, 3-right
-        # h = 0
 
-        #h = len(grid.getAvailableCells())
-        di = {}
-        h=0
-        for x in range(grid.size-1):
-            for y in range(grid.size-1):
-                if grid.map[x][y] not in di:
-                    di[grid.map[x][y]] = 1
-                else:
-                    di[grid.map[x][y]] += 1
-        for each in di:
-            if di[each] == 1:
-                h += 10
-            elif di[each] == 2:
-                h += 5
+        g = grid
+        # w = len(grid.getAvailableCells())/16
+        gc = g.getAvailableCells()
+        gm = grid.map
+        gridSum = 0
+        # countBig = 0
+        # gd = {}
+        h = 0
+        for x in range(g.size):
+            for y in range(g.size):
+                v = gm[x][y]
+                gridSum += v
+                if x<3 and y<3:
+                    h += v - gm[x+1][y]
+                    h += v - gm[x][y+1]
+                    h += v - gm[x+1][y+1]
+                    # h += min(a,b,c)
+
+        # if countBig > 0:
+        #     h += gridSum/(countBig)
+        h += gridSum/(16-len(gc))
+
+        # for v in gd:
+        #     print ('v:',v,' gdv:',gd[v], ' h:', h)
+        #     h += gd[v]/16 * v *2
+
+
+        # h *= w
+        # if gm[0][0] != g.getMaxTile():
+        #     h -= g.getMaxTile()
 
         return h

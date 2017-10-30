@@ -1,105 +1,344 @@
-random 128
-random 64
-random 128
-random 128
-avoid_last 256
-avoid_last 128
-avoid_last 64
-max_f 128
-max_f 32
-max_f 64
-max_f 64
-max_f 128
-max_f 64
-max_f 16
-minmax_f 16
-minmax_f 16
-minmax_f 16
-max_heurisitc 32
-max_heurisitc 128
-max_heurisitc 16
-max_heurisitc 8
-max_heurisitc 16
-max_heurisitc 64
-max_heurisitc 128
-max_heurisitc 128
-max_heurisitc 128
-max_heurisitc 128
-max_heurisitc 256
-max_heurisitc 256
-max_heurisitc 256
-max_heurisitc 128
-max_heurisitc 128
-max_heurisitc 128
-max_heurisitc 256
-max_heurisitc 64
-max_heurisitc 256
-max_heurisitc 256
-max_heurisitc 256
-max_heurisitc 128
-max_heurisitc 128
-max_heurisitc 256
-max_heurisitc 256
-max_heurisitc 128
-max_heurisitc 128
-max_heurisitc 128
-max_heurisitc 64
-max_heurisitc 128
-max_heurisitc 256
-max_heurisitc 128
-max_heurisitc 128
-max_heurisitc 256
-max_heurisitc 256
-max_heurisitc 32
-max_heurisitc 128
-max_heurisitc 32
-max_heurisitc 256
-max_heurisitc 128
-max_heurisitc 128
-max_available 128
-max_available 16
-max_available 16
-max_available 16
-max_available 16
-max_available 16
-max_available 128
-max_available 32
-max_available 128
-minmax64
-minmax2
-minmax2
-minmax2
-minmax2
-minmax2
-minmax4
-minmax4
-minmax512
-minmax2
-minmax2
-minmax2
-minmax2
-minmax2
-minmax512
-minmax128
-minmax256
-minmax128
-minmax512
-minmax512
-minmax4
-minmax2
-minmax128
-minmax4
-minmax256
-minmax256
-minmax64
-minmax16
-minmax128
-minmax256
-minmax128
-minmax128
-minmax256
-minmax512
-minmax64
-minmax512
-minmax128
-minmax256
+minmax2048
+alpha_beta_decHfunction512
+alpha_beta_decHfunction128
+alpha_beta_decHfunction2
+alpha_beta_decHfunction2
+alpha_beta_decHfunction128
+alpha_beta_decHfunction512
+alpha_beta_decHfunction16
+alpha_beta_decHfunction64
+alpha_beta_decHfunction128
+alpha_beta_decHfunction512
+alpha_beta_decHfunction1024
+alpha_beta_decHfunction512
+alpha_beta_decHfunction1024
+alpha_beta_decHfunction512
+alpha_beta_decHfunction1024
+alpha_beta_decHfunction512
+alpha_beta_decHfunction1024
+alpha_beta_decHfunction512
+alpha_beta_decHfunction512
+alpha_beta_decHfunction128
+alpha_beta_decHfunction256
+alpha_beta_decHfunction128
+alpha_beta_decHfunction128
+alpha_beta_decHfunction1024
+alpha_beta_snakeF 16
+alpha_beta_snakeF 512
+alpha_beta_snakeF 128
+alpha_beta_snakeF 512
+alpha_beta_snakeF 256
+alpha_beta_snakeF 1024
+alpha_beta_snakeF 8
+alpha_beta_snakeF 512
+alpha_beta_snakeF 512
+alpha_beta_snakeF 512
+alpha_beta_snakeF 512
+alpha_beta_snakeF 256
+alpha_beta_snakeF 128
+alpha_beta_snakeF 1024
+alpha_beta_snakeF 32
+alpha_beta_snakeF 8
+alpha_beta_snakeF 256
+alpha_beta_snakeF 128
+alpha_beta_snakeF 512
+alpha_beta_snakeF 512
+mass_script 256
+mass_script 512
+mass_script 512
+mass_script 512
+mass_script 1024
+mass_script 128
+mass_script 2048
+mass_script 512
+mass_script 1024
+mass_script 128
+mass_script 128
+mass_script 128
+mass_script 256
+mass_script 256
+mass_script 512
+mass_script 1024
+mass_script 1024
+mass_script 2
+mass_script 512
+mass_script 128
+mass_script 512
+mass_script 8
+mass_script 32
+mass_script 32
+mass_script 256
+mass_script 128
+mass_script 256
+mass_script 128
+mass_script 256
+mass_script 256
+mass_script 512
+mass_script 512
+mass_script 64
+mass_script 1024
+mass_script 128
+mass_script 1024
+mass_script 512
+mass_script 512
+mass_script 128
+mass_script 64
+mass_script 512
+mass_script 32
+mass_script 256
+mass_script 128
+mass_script 256
+mass_script 512
+mass_script 512
+mass_script 128
+mass_script 32
+mass_script 256
+mass_script 256
+mass_script 32
+mass_script 256
+mass_script 128
+mass_script 256
+mass_script 512
+mass_script 256
+mass_script 1024
+mass_script 32
+mass_script 32
+mass_script 256
+mass_script 128
+mass_script 256
+mass_script 256
+mass_script 256
+mass_script 1024
+mass_script 64
+mass_script 128
+mass_script 1024
+mass_script 2048
+mass_script 128
+mass_script 512
+mass_script 512
+mass_script 1024
+mass_script 128
+mass_script 128
+mass_script 512
+mass_script 1024
+mass_script 64
+mass_script 64
+mass_script 128
+mass_script 128
+mass_script 512
+mass_script 256
+mass_script 8
+mass_script 128
+mass_script 128
+mass_script 256
+mass_script 32
+mass_script 64
+mass_script 128
+mass_script 128
+mass_script 8
+mass_script 256
+mass_script 32
+mass_script 256
+mass_script 256
+mass_script 512
+mass_script 512
+mass_script 512
+mass_script 256
+mass_script 1024
+mass_script 2048
+mass_script 256
+mass_script 1024
+right,bot,diag 256
+right,bot,diag 64
+right,bot,diag 256
+right,bot,diag 1024
+right,bot,diag 1024
+moreNegativeToDisorder 32
+right,bot,diag 256
+moreNegativeToDisorder 256
+moreNegativeToDisorder 256
+moreNegativeToDisorder 16
+moreNegativeToDisorder 256
+moreNegativeToDisorder 512
+moreNegativeToDisorder 4
+moreNegativeToDisorderMaxTile 32
+moreNegativeToDisorderMaxTile 128
+moreNegativeToDisorderMaxTile 128
+cellsDif 64
+cellsDif 256
+cellsDif 512
+cellsDif 256
+cellsDif 256
+cellsDif 1024
+cellsDif 2048
+someBreaks 128
+cellsDif 512
+cellsDif 512
+someBreaks 512
+someBreaks 64
+someBreaks 256
+someBreaks 256
+someBreaks 512
+someBreaks 256
+someBreaks 64
+sqDif 64
+sqDif 128
+sqDif 128
+sqDif 16
+sqDif 128
+sqDif 256
+sqDif 512
+sqDif 64
+sqDif 256
+sqDif 256
+sqDif 256
+sqDif 256
+sqDif 512
+sqDif 256
+sqDif 64
+sqDif 1024
+sqDif 256
+sqDif 32
+sqDif 64
+sqDif 128
+sqDif 128
+sqDif 32
+sqDif 256
+sqDif 1024
+sqDif 4
+sqDif 1024
+sqDif 1024
+sqDif 2048
+sqDif 2048
+sqDif 128
+sqDif 256
+sqDif 16
+sqDif 4
+sqDif 256
+sqDif 64
+sqDif 1024
+sqDif 1024
+sqDif 1024
+sqDif 8
+sqDif 2048
+sqDif 256
+sqDif 8
+sqDif 16
+sqDif 512
+sqDif 256
+sqDif 512
+sqDif 128
+sqDif 128
+sqDif 64
+sqDif 256
+sqDif 64
+sqDif 4
+sqDif 512
+sqDif 1024
+sqDif 32
+sqDif 32
+sqDif 32
+sqDif 2048
+sqDif 64
+sqDif 1024
+sqDif 1024
+sqDif 2
+sqDif 2
+sqDif 64
+sqDif 128
+sqDif 2
+sqDif 2
+sqDif 2
+sqDif 2
+sqDif 64
+sqDif 64
+sqDif 16
+sqDif 32
+sqDif 64
+sqDif 256
+sqDif 128
+sqDif 256
+sqDif 128
+sqDif 256
+sqDif 512
+sqDif 1024
+sqDif 512
+sqDif 512
+sqDif 4
+sqDif 512
+sqDif 512
+sqDif 1024
+sqDif 512
+sqDif 1024
+sqDif 512
+sqDif 32
+sqDif 64
+sqDif 128
+sqDif 1024
+sqDif 512
+sqDif 128
+sqDif 128
+sqDif 4
+sqDif 128
+sqDif 64
+sqDif 256
+sqDif 256
+sqDif 256
+sqDif 8
+sqDif 128
+sqDif 64
+sqDif 256
+sqDif 256
+sqDif 64
+sqDif 64
+sqDif 64
+sqDif 128
+sqDif 32
+sqDif 128
+sqDif 128
+sqDif 32
+sqDif 64
+sqDif 512
+sqDif 512
+sqDif 1024
+sqDif 512
+sqDif 256
+sqDif 512
+sqDif 256
+sqDif 32
+sqDif 256
+sqDif 512
+sqDif 512
+sqDif 512
+sqDif 512
+sqDif 512
+sqDif 512
+sqDif 512
+sqDif 128
+sqDif 64
+sqDif 256
+sqDif 512
+sqDif 256
+sqDif 32
+sqDif 512
+sqDif 32
+sqDif 8
+sqDif 512
+sqDif 1024
+sqDif 256
+sqDif 128
+sqDif 256
+sqDif 1024
+sqDif 2048
+sqDif 1024
+sqDif 256
+sqDif 256
+sqDif 16
+sqDif 8
+sqDif 4
+sqDif 1024
+sqDif 2048
+sqDif 64
+sqDif 512
+sqDif 512
+sqDif 2048
