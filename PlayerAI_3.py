@@ -32,6 +32,7 @@ class PlayerAI(BaseAI):
         moves = grid.getAvailableMoves()
         self.lenmoves = len(moves)
         self.movenum = 0
+        self.expNodesLi = []
         fn = 0
         best_move = moves[0]
         for move in moves:
@@ -39,12 +40,12 @@ class PlayerAI(BaseAI):
             self.expNodes = 0
             newGrid = grid.clone()
             newGrid.move(move)
-            move_val = self.minmax(newGrid, 10, -100000, 100000, False)
-            print ('expNodes:', self.expNodes)
+            move_val = self.minmax(newGrid, 4, -100000, 100000, False)
+            self.expNodesLi.append(self.expNodes)
             if move_val > fn:
                 best_move = move
                 fn = move_val
-
+        print ('expNodes:', self.expNodesLi)
         # print ('nodes:', self.expNodes, 'h:', move_val)
         # print(moves, 'val', fn, 'time:', self.t1-self.t0, 'nodes:', self.expNodes, ' movesH:', self.vals)
         return best_move if best_move in moves else None
@@ -104,29 +105,31 @@ class PlayerAI(BaseAI):
         gm = grid.map
         gridSum = 0
         # countBig = 0
-        # gd = {}
+        gd = {
+            0: 0,
+            2: 1,
+            4: 2,
+            8: 3,
+            16: 4,
+            32: 5,
+            64: 6,
+            128: 7,
+            256: 8,
+            512: 9,
+            1024: 10,
+            2048: 11,
+            4096: 12,
+            8192: 13
+        }
         h = 0
+        h += len(gc)
         for x in range(g.size):
             for y in range(g.size):
-                v = gm[x][y]
-                gridSum += v
+                v = gd[gm[x][y]]
+                # gridSum += v
                 if x<3 and y<3:
-                    h += v - gm[x+1][y]
-                    h += v - gm[x][y+1]
-                    h += v - gm[x+1][y+1]
-                    # h += min(a,b,c)
-
-        # if countBig > 0:
-        #     h += gridSum/(countBig)
-        h += gridSum/(16-len(gc))
-
-        # for v in gd:
-        #     print ('v:',v,' gdv:',gd[v], ' h:', h)
-        #     h += gd[v]/16 * v *2
-
-
-        # h *= w
-        # if gm[0][0] != g.getMaxTile():
-        #     h -= g.getMaxTile()
-
+                    h += v - gd[gm[x+1][y]]
+                    h += v - gd[gm[x][y+1]]
+                    h += v - gd[gm[x+1][y+1]]
+                
         return h
