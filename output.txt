@@ -380,3 +380,4 @@ sqDif 256
 sqDif 512
 sqDif 512
 sqDif 512
+sqDif 512
