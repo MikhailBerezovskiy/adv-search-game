@@ -2,6 +2,7 @@ from random import randint
 from BaseAI_3 import BaseAI
 from Displayer_3  import Displayer
 import time
+import math
 
 class PlayerAI(BaseAI):
 
@@ -26,37 +27,28 @@ class PlayerAI(BaseAI):
 # keep track of the time or depth on minmax
 
     def getMove(self, grid):
-        self.t0 = time.clock()
-
-        # self.vals = []
+        
         moves = grid.getAvailableMoves()
-        self.lenmoves = len(moves)
+        self.t0 = time.clock()
         self.movenum = 0
-        self.expNodesLi = []
+        self.lenmoves = len(moves)
+
         fn = 0
         best_move = moves[0]
         for move in moves:
             self.movenum += 1
-            self.expNodes = 0
             newGrid = grid.clone()
             newGrid.move(move)
-            move_val = self.minmax(newGrid, 5, -100000, 100000, False)
-            self.expNodesLi.append(self.expNodes)
+            move_val = self.minmax(newGrid, 10, -100000, 100000, False)
             if move_val > fn:
                 best_move = move
                 fn = move_val
-        print ('expNodes:', self.expNodesLi)
-        # print ('nodes:', self.expNodes, 'h:', move_val)
-        # print(moves, 'val', fn, 'time:', self.t1-self.t0, 'nodes:', self.expNodes, ' movesH:', self.vals)
         return best_move if best_move in moves else None
         ## searching implementation below
 
     def minmax(self, node, depth, alpha, beta, max_player):
-        self.expNodes += 1
         self.t1 = time.clock()
-        # print ('time:', t1 - self.t0)
-        if depth == 0 or self.t1-self.t0 >= 0.18/self.lenmoves*self.movenum:
-        # if depth == 0 or self.t1-self.t0 >= 0.15:
+        if depth == 0 or self.t1-self.t0 >= 0.15/self.lenmoves*self.movenum:
             return self.heuristic_func(node, depth)
 
         if max_player:
@@ -74,64 +66,86 @@ class PlayerAI(BaseAI):
         else:
             v = 100000
             av_cells = node.getAvailableCells()
-            # spawns = av_cells + av_cells
-            spawns = av_cells
+            spawns = av_cells + av_cells
             len4 = len(av_cells)
             track = 0
             for spawn in spawns:
                 childNode = node.clone()
-                # if track > len4:
-                #     insertVal = 4
-                # else:
-                insertVal = 2
+                if track > len4:
+                    insertVal = 4
+                else:
+                    insertVal = 2
                 childNode.insertTile(spawn, insertVal)
+                track += 1
 
                 v = min(v, self.minmax(childNode, depth-1, alpha, beta, True))
                 beta = min (v, beta)
-                track += 1
                 if beta <= alpha:
                     break
             return v
 
 
     def heuristic_func(self, grid, depth):
-        # heuristic_func should return value for particular move
-        # input: move, grid after move, some current state values
-        # return: weight for move
-        # 0-up, 1-down, 2-left, 3-right
-
         g = grid
-        # w = len(grid.getAvailableCells())/16
         gc = g.getAvailableCells()
-        gm = grid.map
-        gridSum = 0
-        # countBig = 0
-        gd = {
+        m = grid.map
+        d = {
             0: 0,
-            2: 1,
-            4: 2,
-            8: 3,
-            16: 4,
-            32: 5,
-            64: 6,
-            128: 7,
-            256: 8,
-            512: 9,
-            1024: 10,
-            2048: 11,
-            4096: 12,
-            8192: 13
+            2: 0,
+            4: 0,
+            8: 0,
+            16: 0,
+            32: 0,
+            64: 0,
+            128: 0,
+            256: 0,
+            512: 0,
+            1024: 0,
+            2048: 0,
+            4096: 0,
+            8192: 0
         }
         h = 0
-        h += len(gc)
-        for x in range(g.size):
-            for y in range(g.size):
-                v = gd[gm[x][y]]
-                # gridSum += v
+        
+        # cornering
+        s = 0
+        sLi = []
+        for x in range (g.size):
+            for y in range (g.size):
+                v = m[x][y]
+                sLi.append(v)
+                d[v] += 1
+                s += v
                 if x<3 and y<3:
-                    h += v - gd[gm[x+1][y]]
-                    h += v - gd[gm[x][y+1]]
-                    h += v - gd[gm[x+1][y+1]]
-        h += len(gc)
-                
-        return h
+                    h += v - m[x+1][y]
+                    h += v - m[x][y+1]
+                    h += v - m[x+1][y+1]
+        cornering = h / (s * 3)
+        # h = h * (len(gc))/16
+        # h += len(gc)
+        avcells  = len(gc)/16
+        
+        
+        # greed
+        greedLi = []
+        gs = 0
+        for i in d:
+            if i != 0 and i != 8192:
+                # print (d[i], d[i*2])
+                d[i*2] += math.trunc(d[i]*i/(i*2))
+                d[i] = d[i]%2
+                if d[i] != 0:
+                    for j in range(d[i]):
+                        greedLi.append(i)
+        for i in range(16 - len(greedLi)):
+            greedLi = [0] + greedLi
+        # sLi.sort()
+        gdiff = 0
+        for i in range(16):
+            if greedLi[i] != 0:
+                gdiff += sLi[i]
+        greed = gdiff / s
+
+        
+        # print ('corn_greed', cornering, greed)
+        return (cornering*500 + avcells*500 + greed*500)
