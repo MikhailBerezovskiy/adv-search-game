@@ -106,7 +106,7 @@ class GameManager:
             turn = 1 - turn
         print(maxTile)
         f = open('output.txt', 'a')
-        f.write('crazyVals ' + str(maxTile) + '\n')
+        f.write('normalGreed ' + str(maxTile) + '\n')
         f.close
 
     def isGameOver(self):
