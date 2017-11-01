@@ -27,10 +27,11 @@ class PlayerAI(BaseAI):
 # keep track of the time or depth on minmax
 
     def getMove(self, grid):
+
         moves = grid.getAvailableMoves()
         self.t0 = time.clock()
-        self.lenmoves = len(moves)
         self.movenum = 0
+        self.lenmoves = len(moves)
 
         fn = 0
         best_move = moves[0]
@@ -38,22 +39,16 @@ class PlayerAI(BaseAI):
             self.movenum += 1
             newGrid = grid.clone()
             newGrid.move(move)
-            move_val = self.minmax(newGrid, 4, -100000, 100000, False)
+            move_val = self.minmax(newGrid, 10, -100000, 100000, False)
             if move_val > fn:
                 best_move = move
                 fn = move_val
-
-        # print ('h=', move_val)
-        # print ('nodes:', self.expNodes, 'h:', move_val)
-        # print(moves, 'val', fn, 'time:', self.t1-self.t0, 'nodes:', self.expNodes, ' movesH:', self.vals)
         return best_move if best_move in moves else None
         ## searching implementation below
 
     def minmax(self, node, depth, alpha, beta, max_player):
         self.t1 = time.clock()
-        # print ('time:', t1 - self.t0)
         if depth == 0 or self.t1-self.t0 >= 0.15/self.lenmoves*self.movenum:
-        # if depth == 0 or self.t1-self.t0 >= 0.15:
             return self.heuristic_func(node, depth)
 
         if max_player:
@@ -76,14 +71,15 @@ class PlayerAI(BaseAI):
             track = 0
             for spawn in spawns:
                 childNode = node.clone()
-                if track > len4:
-                    insertVal = 4
-                else:
-                    insertVal = 2
+                # if track > len4:
+                #     insertVal = 4
+                # else:
+                insertVal = 2
                 childNode.insertTile(spawn, insertVal)
+                # track += 1
+
                 v = min(v, self.minmax(childNode, depth-1, alpha, beta, True))
                 beta = min (v, beta)
-                track += 1
                 if beta <= alpha:
                     break
             return v

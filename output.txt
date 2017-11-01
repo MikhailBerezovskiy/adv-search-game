@@ -342,6 +342,7 @@ sqDif 64
 sqDif 512
 sqDif 512
 sqDif 2048
+<<<<<<< HEAD
 sqDif 4
 sqDif 2
 sqDif 2
@@ -518,10 +519,17 @@ sqDif 256
 sqDif 512
 sqDif 512
 sqDif 512
+=======
+sqDif 128
+sqDif 256
+sqDif 512
+sqDif 1024
+>>>>>>> ad4619ce5d51bcd6558cb0d57aefeea4566403c7
 sqDif 128
 sqDif 512
 sqDif 512
 sqDif 512
+<<<<<<< HEAD
 sqDif 512
 sqDif 64
 sqDif 128
@@ -579,11 +587,34 @@ sqDif 2048
 sqDif 4096
 sqDif 2048
 sqDif 256
+=======
+sqDif 256
+sqDif 256
+sqDif 512
+sqDif 1024
+sqDif 256
+sqDif 512
+sqDif 256
+sqDif 1024
+sqDif 128
+sqDif 512
+sqDif 32
+sqDif 64
+sqDif 256
+sqDif 256
+sqDif 256
+sqDif 512
+sqDif 512
+sqDif 256
+sqDif 512
+sqDif 1024
+>>>>>>> ad4619ce5d51bcd6558cb0d57aefeea4566403c7
 sqDif 512
 sqDif 512
 sqDif 1024
 sqDif 512
 sqDif 512
+<<<<<<< HEAD
 sqDif 512
 sqDif 32
 sqDif 2048
@@ -678,3 +709,11 @@ newAge 1024
 newAge 1024
 newAge 2048
 newAge 2048
+=======
+sqDif 1024
+sqDif 256
+sqDif 512
+sqDif 512
+sqDif 512
+sqDif 512
+>>>>>>> ad4619ce5d51bcd6558cb0d57aefeea4566403c7
