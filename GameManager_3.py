@@ -106,7 +106,7 @@ class GameManager:
             turn = 1 - turn
         print(maxTile)
         f = open('output.txt', 'a')
-        f.write('sqDif ' + str(maxTile) + '\n')
+        f.write('newAge ' + str(maxTile) + '\n')
         f.close
 
     def isGameOver(self):

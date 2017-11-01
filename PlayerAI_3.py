@@ -38,12 +38,12 @@ class PlayerAI(BaseAI):
             self.movenum += 1
             newGrid = grid.clone()
             newGrid.move(move)
-            move_val = self.minmax(newGrid, 5, -100000, 100000, False)
-            # print ('h=', move_val)
+            move_val = self.minmax(newGrid, 4, -100000, 100000, False)
             if move_val > fn:
                 best_move = move
                 fn = move_val
 
+        # print ('h=', move_val)
         # print ('nodes:', self.expNodes, 'h:', move_val)
         # print(moves, 'val', fn, 'time:', self.t1-self.t0, 'nodes:', self.expNodes, ' movesH:', self.vals)
         return best_move if best_move in moves else None
@@ -90,76 +90,32 @@ class PlayerAI(BaseAI):
 
 
     def heuristic_func(self, grid, depth):
-
         g = grid
         gc = g.getAvailableCells()
-        gm = grid.map
+        m = grid.map
         h = 0
-        m = g.getMaxTile()
-        for x in range(g.size-1):
-            for y in range(g.size-1):
-                v = gm[x][y]
-                i = x+1
-                j = y+1
+        gsum = 0
+        frow = 0
+        srow = 0
+        diff = 0
+        for x in range(g.size):
+            for y in range(g.size):
+                v = m[x][y]
+                gsum += v
+                if x==0:
+                    frow += v
+                if x==1:
+                    srow += v
+        for y in range(g.size-1):
+            if m[0][y] > m[0][y+1]:
+                diff += frow/4
+        h += (diff/gsum) * 40
 
-                h+= v - gm[i][y]/4
-                h+= v - gm[x][j]
-                h+= v - gm[i][j]/2
+        h += frow / gsum * 40
 
-        h+= 2*h/(16-len(gc))
-        if g.getMaxTile() != gm[0][0]:
-            h -= g.getMaxTile()
-        # h += len(gc) * h
+        h += srow / gsum * 20
+        # h += diff / gsum * 20
+        h += len(gc) / 12 * 40
+
+        # h += gsum/(16-len(gc))/g.getMaxTile()
         return h
-
-
-
-
-    # gd = {
-    #     0: 0,
-    #     2: 0,
-    #     4: 0,
-    #     8: 0,
-    #     16: 0,
-    #     32: 0,
-    #     64: 0,
-    #     256: 0,
-    #     128: 0,
-    #     512: 0,
-    #     1024: 0,
-    #     2048: 0,
-    #     4096: 0,
-    #     8192: 0
-    # }
-
-
-
-
-
-
-
-        # # print ('init d', gd)
-        # for i in gd:
-        #     if gd[i] != 0 and i not in [0,8192]:
-        #         # if i*2 <= gd[i]*i:
-        #         #     gd[i*2] += 1
-        #         #     gd[i] -= 2
-        #         # for j in range(gd[i]):
-        #         gd[i*2] += math.trunc(gd[i]*i/(i*2))
-        #         gd[i] = gd[i]%2
-        #         if gd[i] > 0:
-        #             target = [i] + target
-        # for i in range(16-len(target)):
-        #     # target = [0] + target
-        #     target.append(0)
-        #
-        # # target2 = source[:]
-        # # target2.sort()
-        # for i in range(len(source)):
-        #     h -= abs(target[i] - source[i])
-        #         # h += source[i] + target2[i]
-        # h += len(gc)
-        # print ('d', gd)
-        # print ('s', source)
-        # print ('t', target)
-        # print ('h', h)
