@@ -3,6 +3,7 @@
 
 PlayerAI_3 - user's implemenation of search algorithms
 
-To run the programm just run GameManager_3:
- $ python3(python) GameManager_3
-
+Start game:
+```sh
+python3 GameManager_3
+```
